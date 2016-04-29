@@ -5,7 +5,8 @@
 
 
 // Find a inverse matrix of a square and check it
-void Sample1() {
+void Sample1()
+{
     const int iSize   = 3;
     double mTestInit[3][3] = { {1, 2, 0}, { -1, 1, 1}, { 1, 2, 3} };
     
@@ -57,7 +58,8 @@ void Sample1() {
 
 
 // Find a transpose matrix of a none square matrix
-void Sample2() {
+void Sample2()
+{
     const int iSizeM  = 2, iSizeN = 3;
     double mTestInit[2][3] = { {1, 2, 0}, { -1, 1, 1} };
 
@@ -91,10 +93,15 @@ void Sample2() {
     Transpose(mTest, iSizeM, iSizeN, mInverse);
     printf("Transpose matrix TA = \n");
     PrintMatrix(mInverse, iSizeN, iSizeM);
-}
 
+    for(i = 0; i < iSizeM; i++) {
+        free(mTest[i]);
+    }
 
-// Find a inverse matrix of a none square matrix
-void Sample3() {
+    for(i = 0; i < iSizeN; i++) {
+        free(mInverse[i]);
+    }
 
+    free(mTest);
+    free(mInverse);
 }
