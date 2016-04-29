@@ -41,14 +41,14 @@ void TransposeSquare(double **mInput, int iSize, double **mOutput);
 double Determinant(double **mInput, int size);
 
 
-// Find the multiplication(mOutput) of matrixA(mInputA) and matrixB(mInputB)
+// Find the product(mOutput) of matrixA(mInputA) and matrixB(mInputB)
 // matrixA is a iSizeM * iSizeN matrix
 // matrixB is a iSizeN * iSizeO matrix
 // mOutput is a iSizeM * iSizeM matrix
 void MultiMatrix(double **mInputA, double **mInputB, int iSizeM, int iSizeN, int iSizeO, double **mOutput);
 
 
-// Find the multiplication(mOutput) of square matrixA(mInputA) and square matrixB(mInputB)
+// Find the product(mOutput) of square matrixA(mInputA) and square matrixB(mInputB)
 // matrixA, matrixB and mOutput are a iSize * iSize matrix
 void MultiSquareMatrix(double **mInputA, double **mInputB, int iSize, double **mOutput);
 

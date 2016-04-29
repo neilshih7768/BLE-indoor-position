@@ -87,6 +87,7 @@ void CoFactor(double **mInput, int iSize, double **mOutput)
 void Transpose(double **mInput, int iSizeM, int iSizeN, double **mOutput)
 {
     int i = 0, j = 0;
+
     for(i =  0; i < iSizeM; i++)
         for(j = 0; j < iSizeN; j++)
             mOutput[j][i] = mInput[i][j];
@@ -96,11 +97,6 @@ void Transpose(double **mInput, int iSizeM, int iSizeN, double **mOutput)
 // TransposeSquare of a square matrix(mInput) with row size(iSize)
 void TransposeSquare(double **mInput, int iSize, double **mOutput)
 {
-    /*int i = 0, j = 0;
-    for(i =  0; i < iSize; i++)
-        for(j = 0; j < iSize; j++)
-            mOutput[j][i] = mInput[i][j];*/
-
     Transpose(mInput, iSize, iSize, mOutput);
 }
 
@@ -145,7 +141,7 @@ double Determinant(double **mInput,int iSize)
 }
 
 
-// Find the multiplication(mOutput) of matrixA(mInputA) and matrixB(mInputB)
+// Find the product(mOutput) of matrixA(mInputA) and matrixB(mInputB)
 // matrixA is a iSizeM * iSizeN matrix
 // matrixB is a iSizeN * iSizeO matrix 
 // mOutput is a iSizeM * iSizeM matrix
@@ -166,7 +162,7 @@ void MultiMatrix(double **mInputA, double **mInputB, int iSizeM, int iSizeN, int
 }
 
 
-// Find the multiplication(mOutput) of square matrixA(mInputA) and square matrixB(mInputB)
+// Find the product(mOutput) of square matrixA(mInputA) and square matrixB(mInputB)
 // matrixA, matrixB and mOutput are a iSizeM * iSizeM matrix
 void MultiSquareMatrix(double **mInputA, double **mInputB, int iSize, double **mOutput)
 {
