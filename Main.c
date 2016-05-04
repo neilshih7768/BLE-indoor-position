@@ -7,15 +7,17 @@
 
 int main()
 {
-    double dP0, dN;
+    double dP0, dN, dRef;
+
+    dRef = 200.0;
 
     GetBLEData();
 
-    GetLNSData(100.0, &dP0, &dN);
+    GetLNSData(dRef, &dP0, &dN);
 
     PrintBLEMean();
 
-    printf("P0  = %.3f  N = %.3f\n", dP0, dN);
+    printf("P0  = %.3f  N = %.3f dRef = %.3f \n", dP0, dN, dRef);
 
     
 

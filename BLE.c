@@ -22,6 +22,10 @@ void LoadFileData(char *sFilePath, BLEData *bleData)
         return;
     }
 
+    for(i = 1; i < iSampleHeader; i++) {
+        fgets(sBuffer, 50, fPtr);       // Throw out data headers
+    }
+
     while (fgets(sBuffer, 50, fPtr) != NULL) {
         bleData->iData[i] = atoi(sBuffer);
         i++;
