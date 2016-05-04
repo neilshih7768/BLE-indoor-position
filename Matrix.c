@@ -7,97 +7,111 @@
 
 // Find the inverse matrix(mOutput) of a matrix(mInput) with row size(iSize)
 // Inverse = TransposeSquare( CoFactor ) / Determinant
-void Inverse(double **mInput, int iSize, double **mOutput)
+double **Inverse(double **mInput, int iSize)
 {
-    double **dTranspose = (double **)malloc(sizeof(double) * iSize);
-    double **dCoFactor  = (double **)malloc(sizeof(double) * iSize);
-    double dDeterminant = Determinant(mInput, iSize);
     int i = 0, j = 0;
 
-    for(i = 0; i < iSize; i++) {
-        dTranspose[i]   = (double *)malloc(sizeof(double) * iSize);
-        dCoFactor[i]    = (double *)malloc(sizeof(double) * iSize);
-    }
+    double **mOutput    = (double **)malloc(sizeof(double) * iSize);
+    double **mCoFactor  = CoFactor(mInput, iSize);
+    double **mTranspose = TransposeSquare(mCoFactor, iSize);
+    double mDeterminant = Determinant(mInput, iSize);   
 
-    CoFactor(mInput, iSize, dCoFactor);
-    TransposeSquare(dCoFactor, iSize, dTranspose);
+    for(i = 0; i < iSize; i++) {
+        mOutput[i] = (double *)malloc(sizeof(double) * iSize);
+    }
 
     for(i = 0; i < iSize; i++) {
         for(j = 0; j < iSize; j++) {
-            mOutput[i][j] = dTranspose[i][j] / dDeterminant;
+            mOutput[i][j] = mTranspose[i][j] / mDeterminant;
         }
     }
 
     for(i = 0; i < iSize; i++) {
-        free(dTranspose[i]);
-        free(dCoFactor[i]);
+        free(mTranspose[i]);
+        free(mCoFactor[i]);
     }
 
-    free(dTranspose);
-    free(dCoFactor);
+    free(mTranspose);
+    free(mCoFactor);
 
-    return;
+    return mOutput;
 }
 
 
 // Find the cofactor matrix(mOutput) of a square matrix(mInput) with row size(iSize)
-void CoFactor(double **mInput, int iSize, double **mOutput)
+double **CoFactor(double **mInput, int iSize)
 {
-   int i, j, ii, jj, i1, j1;
-   double det;
-   double **c;
+    int i, j, ii, jj, i1, j1;
 
-   c = (double**)malloc((iSize-1) * sizeof(double *));
-   for (i = 0; i < iSize-1; i++)
-     c[i] = (double*)malloc((iSize-1) * sizeof(double));
+    double **mOutput = (double **)malloc(sizeof(double) * iSize);
+    double det;
+    double **c;
 
-   for (j = 0; j < iSize; j++) {
-      for (i = 0; i < iSize; i++) {
+    for(i = 0; i < iSize; i++) {
+        mOutput[i] = (double *)malloc(sizeof(double) * iSize);
+    }
 
-         // Form the adjoint a_ij
-         i1 = 0;
-         for (ii = 0; ii < iSize; ii++) {
+    c = (double**)malloc((iSize-1) * sizeof(double *));
+    for (i = 0; i < iSize-1; i++)
+        c[i] = (double*)malloc((iSize-1) * sizeof(double));
+
+    for (j = 0; j < iSize; j++) {
+        for (i = 0; i < iSize; i++) {
+
+            // Form the adjoint a_ij
+            i1 = 0;
+            for (ii = 0; ii < iSize; ii++) {
             if (ii == i)
-               continue;
+                continue;
             j1 = 0;
             for (jj = 0; jj < iSize; jj++) {
-               if (jj == j)
-                  continue;
-               c[i1][j1] = mInput[ii][jj];
-               j1++;
+                if (jj == j)
+                    continue;
+                c[i1][j1] = mInput[ii][jj];
+                j1++;
             }
             i1++;
-         }
+            }
 
-         // Calculate the determinate
-         det = Determinant(c, iSize-1);
+            // Calculate the determinate
+            det = Determinant(c, iSize-1);
 
-         // Fill in the elements of the cofactor
-         mOutput[i][j] = pow(-1.0, i+j+2.0) * det;
-      }
-   }
-   for (i = 0; i < iSize-1; i++) {
-      free(c[i]);
-   }
-   free(c);
+            // Fill in the elements of the cofactor
+            mOutput[i][j] = pow(-1.0, i+j+2.0) * det;
+        }
+    }
+    for (i = 0; i < iSize-1; i++) {
+        free(c[i]);
+    }
+    free(c);
+
+    return mOutput;
 }
 
 
 // Transpose of a matrix(mInput) with row size(iSizeM) and column size(iSizeN)
-void Transpose(double **mInput, int iSizeM, int iSizeN, double **mOutput)
+double **Transpose(double **mInput, int iSizeM, int iSizeN)
 {
     int i = 0, j = 0;
+
+    double **mOutput = (double **)malloc(sizeof(double) * iSizeN);
+
+    for(i = 0; i < iSizeN; i++) {
+        mOutput[i] = (double *)malloc(sizeof(double) * iSizeM);
+    }
 
     for(i =  0; i < iSizeM; i++)
         for(j = 0; j < iSizeN; j++)
             mOutput[j][i] = mInput[i][j];
+
+    return mOutput;
 }
 
 
 // TransposeSquare of a square matrix(mInput) with row size(iSize)
-void TransposeSquare(double **mInput, int iSize, double **mOutput)
+double **TransposeSquare(double **mInput, int iSize)
 {
-    Transpose(mInput, iSize, iSize, mOutput);
+    return Transpose(mInput, iSize, iSize);
 }
 
 
@@ -105,6 +119,7 @@ void TransposeSquare(double **mInput, int iSize, double **mOutput)
 double Determinant(double **mInput,int iSize)
 {
    int i, j, j1, j2;
+
    double det = 0;
    double **m = NULL;
 
@@ -145,28 +160,36 @@ double Determinant(double **mInput,int iSize)
 // matrixA is a iSizeM * iSizeN matrix
 // matrixB is a iSizeN * iSizeO matrix 
 // mOutput is a iSizeM * iSizeM matrix
-void MultiMatrix(double **mInputA, double **mInputB, int iSizeM, int iSizeN, int iSizeO, double **mOutput)
+double **MultiMatrix(double **mInputA, double **mInputB, int iSizeM, int iSizeN, int iSizeO)
 {
     int i = 0, j = 0, k = 0;
+
+    double **mOutput = (double **)malloc(sizeof(double) * iSizeM);
+
+    for(i = 0; i < iSizeM; i++) {
+        mOutput[i] = (double *)malloc(sizeof(double) * iSizeO);
+    }
+
+    
     for(i = 0; i < iSizeM; i++) {
         for(j = 0; j < iSizeO; j++) {
             double sum = 0;
             for(k = 0; k < iSizeN; k++) {
                 sum += mInputA[i][k] * mInputB[k][j];
-                //printf("%2.2f * %2.2f = %2.2f\n", mInputA[i][k], mInputB[k][j], mInputA[i][k] * mInputB[k][j]);
             }
-            //printf("[%d][%d] = %2.2f\n", i, j, sum);
             mOutput[i][j] = sum;
         }
     }
+
+    return mOutput;
 }
 
 
 // Find the product(mOutput) of square matrixA(mInputA) and square matrixB(mInputB)
 // matrixA, matrixB and mOutput are a iSizeM * iSizeM matrix
-void MultiSquareMatrix(double **mInputA, double **mInputB, int iSize, double **mOutput)
+double **MultiSquareMatrix(double **mInputA, double **mInputB, int iSize)
 {
-    MultiMatrix(mInputA, mInputB, iSize, iSize, iSize, mOutput);
+    return MultiMatrix(mInputA, mInputB, iSize, iSize, iSize);
 }
 
 
@@ -174,6 +197,7 @@ void MultiSquareMatrix(double **mInputA, double **mInputB, int iSize, double **m
 void PrintMatrix(double **mInput, int iSizeM, int iSizeN)
 {
     int i = 0, j = 0;
+
     for(i = 0; i < iSizeM; i++) {
         for(j = 0; j < iSizeN; j++) {
             if(-0 == mInput[i][j])      // Strang condition

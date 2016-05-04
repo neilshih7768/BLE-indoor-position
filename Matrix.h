@@ -22,19 +22,19 @@ Matrix example :
 
 // Find the inverse matrix(mOutput) of a matrix(mInput) with row size(iSize)
 // Inverse = Transpose( CoFactor ) / Determinant
-void Inverse(double **mInput, int iSize, double **mOutput);
+double **Inverse(double **mInput, int iSize);
 
 
 // Find the cofactor matrix(mOutput) of a square matrix(mInput) with row size(iSize)
-void CoFactor(double **mInput, int iSize, double **mOutput);
+double **CoFactor(double **mInput, int iSize);
 
 
 // Find the transpose matrix(mOutput) of a matrix(mInput) with row size(iSizeM) and column size(iSizeN)
-void Transpose(double **mInput, int iSizeM, int iSizeN, double **mOutput);
+double **Transpose(double **mInput, int iSizeM, int iSizeN);
 
 
 // Find the transpose matrix(mOutput) of a matrix(mInput) with row size(iSize)
-void TransposeSquare(double **mInput, int iSize, double **mOutput);
+double **TransposeSquare(double **mInput, int iSize);
 
 
 // Recursive definition of determinate using expansion by minors
@@ -45,12 +45,12 @@ double Determinant(double **mInput, int size);
 // matrixA is a iSizeM * iSizeN matrix
 // matrixB is a iSizeN * iSizeO matrix
 // mOutput is a iSizeM * iSizeM matrix
-void MultiMatrix(double **mInputA, double **mInputB, int iSizeM, int iSizeN, int iSizeO, double **mOutput);
+double **MultiMatrix(double **mInputA, double **mInputB, int iSizeM, int iSizeN, int iSizeO);
 
 
 // Find the product(mOutput) of square matrixA(mInputA) and square matrixB(mInputB)
 // matrixA, matrixB and mOutput are a iSize * iSize matrix
-void MultiSquareMatrix(double **mInputA, double **mInputB, int iSize, double **mOutput);
+double **MultiSquareMatrix(double **mInputA, double **mInputB, int iSize);
 
 
 // Print the data of a matrix(mInput) with row size(iSizeM) and column size(iSizeN)

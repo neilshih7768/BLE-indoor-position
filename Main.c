@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "BLE.h"
+#include "Sample.h"
 
 
 int main()
@@ -14,7 +15,8 @@ int main()
 
     PrintBLEMean();
 
-    printf("P0  = %.3f  N = %f.3\n", dP0, dN);
+    printf("P0  = %.3f  N = %.3f\n", dP0, dN);
+
     
 
     printf("\n");

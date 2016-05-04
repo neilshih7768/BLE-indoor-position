@@ -11,14 +11,13 @@ void Sample1()
     double mTestInit[3][3] = { {1, 2, 0}, { -1, 1, 1}, { 1, 2, 3} };
     
     double **mTest    = (double **)malloc(sizeof(double) * iSize);
-    double **mInverse = (double **)malloc(sizeof(double) * iSize);
+    double **mInverse;
     double **mMulti   = (double **)malloc(sizeof(double) * iSize);
 
     int i = 0, j = 0;
 
     for(i = 0; i < iSize; i++) {
         mTest[i]      = (double *)malloc(sizeof(double) * iSize);
-        mInverse[i]   = (double *)malloc(sizeof(double) * iSize);
         mMulti[i]     = (double *)malloc(sizeof(double) * iSize);
     }
 
@@ -36,13 +35,13 @@ void Sample1()
 
 
     // Inverse the matrix
-    Inverse(mTest, iSize, mInverse);
+    mInverse = Inverse(mTest, iSize);
     printf("Inverse matrix IA = \n");
     PrintMatrix(mInverse, iSize, iSize);
 
 
     // Check the inverse matrix multiplied by input matrix is identity matrix
-    MultiMatrix(mTest, mInverse, 3, 3, 3, mMulti);
+    mMulti = MultiMatrix(mTest, mInverse, 3, 3, 3);
     printf("Multiple matrix A * IA = \n");
     PrintMatrix(mMulti, iSize, iSize);
     
@@ -60,20 +59,20 @@ void Sample1()
 // Find a transpose matrix of a none square matrix
 void Sample2()
 {
-    const int iSizeM  = 2, iSizeN = 3;
+    const int iSizeM    = 2, iSizeN = 3;
     double mTestInit[2][3] = { {1, 2, 0}, { -1, 1, 1} };
 
-    double **mTest    = (double **)malloc(sizeof(double) * iSizeM); // Important index is M
-    double **mInverse = (double **)malloc(sizeof(double) * iSizeN);
+    double **mTest      = (double **)malloc(sizeof(double) * iSizeM); // Important index is M
+    double **mTranspose = (double **)malloc(sizeof(double) * iSizeN);
 
     int i = 0, j = 0;
 
     for(i = 0; i < iSizeM; i++) {                                   // Important index is M
-        mTest[i]      = (double *)malloc(sizeof(double) * iSizeN);  // Important index is N
+        mTest[i]        = (double *)malloc(sizeof(double) * iSizeN);  // Important index is N
     }
 
     for(i = 0; i < iSizeN; i++) {
-        mInverse[i]   = (double *)malloc(sizeof(double) * iSizeM);
+        mTranspose[i]   = (double *)malloc(sizeof(double) * iSizeM);
     }
 
     for(i = 0; i < iSizeM; i++) {
@@ -90,18 +89,18 @@ void Sample2()
 
 
     // Transpose the matrix
-    Transpose(mTest, iSizeM, iSizeN, mInverse);
+    mTranspose = Transpose(mTest, iSizeM, iSizeN);
     printf("Transpose matrix TA = \n");
-    PrintMatrix(mInverse, iSizeN, iSizeM);
+    PrintMatrix(mTranspose, iSizeN, iSizeM);
 
     for(i = 0; i < iSizeM; i++) {
         free(mTest[i]);
     }
 
     for(i = 0; i < iSizeN; i++) {
-        free(mInverse[i]);
+        free(mTranspose[i]);
     }
 
     free(mTest);
-    free(mInverse);
+    free(mTranspose);
 }

@@ -7,11 +7,6 @@
 
 
 BLEData bleData[iFileSize];
-double **mA;        // iFileSize * 1
-double **mTA;       // 1 * iFileSize
-double **mY;        // 1 * iFileSize
-
-double **mR1;       // iFileSize * iFileSize = mA * mTA
 
 
 void LoadFileData(char *sFilePath, BLEData *bleData)
@@ -37,26 +32,6 @@ void LoadFileData(char *sFilePath, BLEData *bleData)
     fclose(fPtr);
 }
 
-void InitMatrix()
-{
-    int i = 0, j = 0;
-
-    for(i = 0; i < iFileSize; i++) {
-        mA  = (double **)malloc(sizeof(double) * iFileSize);
-        mTA = (double **)malloc(sizeof(double) * 1);
-        mY  = (double **)malloc(sizeof(double) * 1);
-
-        mR1 = (double **)malloc(sizeof(double) * 1); 
-
-        for(j = 0; j < iFileSize; j++) {
-            mA[j]  = (double *)malloc(sizeof(double) * 1);
-            mR1[j] = (double *)malloc(sizeof(double) * 1);
-        }
-        mTA[0] = (double *)malloc(sizeof(double) * iFileSize);
-        mY[0]  = (double *)malloc(sizeof(double) * iFileSize);
-    }
-}
-
 
 void GetBLEData()
 {
@@ -75,6 +50,26 @@ void GetLNSData(double dRef, double *dP0, double *dN)
 {
     int  i = 0;
 
+    double **mA;        // 1 * iFileSize
+    double **mTA;       // iFileSize * 1
+
+    double **mY;        // 1 * iFileSize
+    double **mTY;       // iFileSize * 1
+
+    double **mR1;       // iFileSize * iFileSize = mA * mTA
+    double **mR2;
+    double **mR3;
+    double **mR4;
+
+    // Init matrix
+    mA = (double **)malloc(sizeof(double));
+    mY = (double **)malloc(sizeof(double));
+
+    for(i = 0; i < iFileSize; i++) {
+        mA[i]  = (double *)malloc(sizeof(double));
+        mY[i]  = (double *)malloc(sizeof(double));
+    }
+
     // Find p0
     for(i = 0; i < iFileSize; i++) {
         bleData[i].dD = (double)bleData[i].iDistance / dRef;
@@ -83,19 +78,38 @@ void GetLNSData(double dRef, double *dP0, double *dN)
     }
  
     // Find N
-    InitMatrix();
-
     for(i = 0; i < iFileSize; i++) {
-        *mA[i] = 10 * log10(bleData[i].dD);
+        mA[0][i] = 10 * log10(bleData[i].dD);
     }
 
-    Transpose(mA, iFileSize, 1, mTA);
+    mTA = Transpose(mA, 1, iFileSize);
 
     for(i = 0; i < iFileSize; i++) {
         mY[0][i] = *dP0 - bleData[i].dMean;
     }
 
-    //MultiMatrix(mA, mTA, iFileSize, 1, iFileSize, mR1);
+    mTY = Transpose(mY, 1, iFileSize);
+
+    // n = inv(transpose(A) * A) * transpose(A) * y;
+
+    // mA matrix size = 1 * iFileSize
+    // mTA matrix size = iFileSize * 1.
+
+    // mR1 = transpose(A) * A 
+    // matrix size = 1 * 1.
+    mR1 = MultiMatrix(mA, mTA, 1, iFileSize, 1);
+
+    // mR2 = inv(mR1)
+    // matrix size = 1 * 1.
+    mR2 = Inverse(mR1, 1);
+
+    // mR3 = mR2 * transpose(A) , matrix size = 1 * iFileSize.
+    mR3 = MultiMatrix(mR2, mA, 1, 1, iFileSize);
+    
+    // mR4 = mR3 * y
+    mR4 = MultiMatrix(mR3, mTY, 1, iFileSize, 1);
+
+    *dN = mR4[0][0];
 }
 
 
