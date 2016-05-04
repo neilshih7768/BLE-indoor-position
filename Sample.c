@@ -7,18 +7,17 @@
 // Find a inverse matrix of a square and check it
 void Sample1()
 {
-    const int iSize   = 3;
+    const int iSize = 3;
     double mTestInit[3][3] = { {1, 2, 0}, { -1, 1, 1}, { 1, 2, 3} };
     
-    double **mTest    = (double **)malloc(sizeof(double) * iSize);
+    double **mTest = (double **)malloc(sizeof(double) * iSize);
     double **mInverse;
-    double **mMulti   = (double **)malloc(sizeof(double) * iSize);
+    double **mMulti;
 
     int i = 0, j = 0;
 
     for(i = 0; i < iSize; i++) {
-        mTest[i]      = (double *)malloc(sizeof(double) * iSize);
-        mMulti[i]     = (double *)malloc(sizeof(double) * iSize);
+        mTest[i] = (double *)malloc(sizeof(double) * iSize);
     }
 
     for(i = 0; i < iSize; i++) {
@@ -49,30 +48,28 @@ void Sample1()
     for(i = 0; i < iSize; i++) {
         free(mTest[i]);
         free(mInverse[i]);
+        free(mMulti[i]);
     }
 
     free(mTest);
     free(mInverse);
+    free(mMulti);
 }
 
 
 // Find a transpose matrix of a none square matrix
 void Sample2()
 {
-    const int iSizeM    = 2, iSizeN = 3;
+    const int iSizeM = 2, iSizeN = 3;
     double mTestInit[2][3] = { {1, 2, 0}, { -1, 1, 1} };
 
-    double **mTest      = (double **)malloc(sizeof(double) * iSizeM); // Important index is M
-    double **mTranspose = (double **)malloc(sizeof(double) * iSizeN);
+    double **mTest = (double **)malloc(sizeof(double) * iSizeM);    // Important index is M
+    double **mTranspose;
 
     int i = 0, j = 0;
 
     for(i = 0; i < iSizeM; i++) {                                   // Important index is M
-        mTest[i]        = (double *)malloc(sizeof(double) * iSizeN);  // Important index is N
-    }
-
-    for(i = 0; i < iSizeN; i++) {
-        mTranspose[i]   = (double *)malloc(sizeof(double) * iSizeM);
+        mTest[i] = (double *)malloc(sizeof(double) * iSizeN);       // Important index is N
     }
 
     for(i = 0; i < iSizeM; i++) {

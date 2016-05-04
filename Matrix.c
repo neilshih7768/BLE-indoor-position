@@ -33,12 +33,12 @@ double **Inverse(double **mInput, int iSize)
     }
 
     for(i = 0; i < iSize; i++) {
-        free(mTranspose[i]);
         free(mCoFactor[i]);
+        free(mTranspose[i]);
     }
 
-    free(mTranspose);
     free(mCoFactor);
+    free(mTranspose);
 
     return mOutput;
 }

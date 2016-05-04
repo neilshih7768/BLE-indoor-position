@@ -19,8 +19,6 @@ int main()
 
     printf("P0  = %.3f  N = %.3f dRef = %.3f \n", dP0, dN, dRef);
 
-    
-
     printf("\n");
     system("PAUSE");
 	return 0;
