@@ -26,6 +26,8 @@ void LoadFileData(char *sFilePath, BLEData *bleData)
         fgets(sBuffer, 50, fPtr);       // Throw out data headers
     }
 
+    i = 0;
+
     while (fgets(sBuffer, 50, fPtr) != NULL) {
         bleData->iData[i] = atoi(sBuffer);
         i++;
@@ -67,10 +69,12 @@ void GetLNSData(double dRef, double *dP0, double *dN)
 
     // Init matrix
     mA = (double **)malloc(sizeof(double));
-    mY = (double **)malloc(sizeof(double));
-
     for(i = 0; i < iFileSize; i++) {
         mA[i]  = (double *)malloc(sizeof(double));
+    }
+
+    mY = (double **)malloc(sizeof(double));
+    for(i = 0; i < iFileSize; i++) {
         mY[i]  = (double *)malloc(sizeof(double));
     }
 
@@ -80,10 +84,10 @@ void GetLNSData(double dRef, double *dP0, double *dN)
         if(bleData[i].iDistance == (int)dRef)
             *dP0 = bleData[i].dMean;
     }
- 
+    
     // Find N
     for(i = 0; i < iFileSize; i++) {
-        mA[0][i] = 10 * log10(bleData[i].dD);
+        mA[0][i] = 10 * log(bleData[i].dD);
     }
 
     mTA = Transpose(mA, 1, iFileSize);

@@ -1,5 +1,5 @@
 #include "MyMath.h"
-
+#include <stdio.h>
 
 double Mean(int *iData, int iSize)
 {
