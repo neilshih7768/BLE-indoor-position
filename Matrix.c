@@ -14,7 +14,13 @@ double **Inverse(double **mInput, int iSize)
     double **mOutput    = (double **)malloc(sizeof(double) * iSize);
     double **mCoFactor  = CoFactor(mInput, iSize);
     double **mTranspose = TransposeSquare(mCoFactor, iSize);
-    double mDeterminant = Determinant(mInput, iSize);   
+    double mDeterminant = Determinant(mInput, iSize);
+
+    if(1 == iSize) {
+        mOutput[0] = (double *)malloc(sizeof(double));
+        mOutput[0][0] = (double)1 / mInput[0][0];
+        return mOutput;
+    }
 
     for(i = 0; i < iSize; i++) {
         mOutput[i] = (double *)malloc(sizeof(double) * iSize);
