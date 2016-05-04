@@ -1,36 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Sample.h"
+
 #include "BLE.h"
-#include "MyMath.h"
 
 
 int main()
 {
-    const int iSampleRate = 300;
-    int i = 0;
-    int iData[10][300];
-    double dMean[10];
-    char sFilePath[30];
+    double dP0, dN;
 
-    // Sample1();
+    GetBLEData();
 
-    // Sample2();
+    GetLNSData(100.0, &dP0, &dN);
 
-    for(i = 0; i < 10; i++) {
-        sprintf(sFilePath, "Bong watch/%dcm.csv", (i+1)*20 ) ;    // 20, 40, ... 200
-        LoadData(sFilePath, iData[i]);
-    }
+    PrintBLEMean();
 
-    for(i = 0; i < 10; i++) {
-        dMean[i] = Mean(iData[i], iSampleRate);
-        printf("%d : %f\n", i, dMean[i]);
-    }
-
-
+    printf("P0  = %.3f  N = %f.3\n", dP0, dN);
     
-    printf("\n");
 
+    printf("\n");
     system("PAUSE");
 	return 0;
 }
