@@ -6,7 +6,7 @@
 void InverseSample();
 
 // Find a transpose matrix of a none square matrix
-void TranseposeSample();
+void TransposeSample();
 
 // Find BLE data
 void LNSSample();

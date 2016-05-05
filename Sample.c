@@ -59,7 +59,7 @@ void InverseSample()
 
 
 // Find a transpose matrix of a none square matrix
-void TranseposeSample()
+void TransposeSample()
 {
     const int iSizeM = 2, iSizeN = 3;
     double mTestInit[2][3] = { {1, 2, 0}, { -1, 1, 1} };
