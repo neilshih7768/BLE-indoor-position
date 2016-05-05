@@ -1,9 +1,9 @@
-#include "BLE.h"
-#include "Matrix.h"
-#include "MyMath.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "BLE.h"
+#include "Matrix.h"
+#include "MyMath.h"
 
 
 BLEData bleData[iFileSize];
@@ -39,7 +39,7 @@ void LoadFileData(char *sFilePath, BLEData *bleData)
 }
 
 
-void GetBLEData()
+void SetBLEData()
 {
     int  i = 0;
     char sFilePath[30];

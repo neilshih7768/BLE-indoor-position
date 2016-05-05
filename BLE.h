@@ -17,7 +17,7 @@ typedef struct _BLEData {
 } BLEData;
 
 
-void GetBLEData();
+void SetBLEData();
 void GetLNSData(double dRef, double *dP0, double *dN);
 void PrintBLEMean();
 

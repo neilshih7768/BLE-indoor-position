@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "Matrix.h"
 #include <string.h>
+#include "Matrix.h"
 
 
 // Find the inverse matrix(mOutput) of a matrix(mInput) with row size(iSize)

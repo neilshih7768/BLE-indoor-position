@@ -1,11 +1,12 @@
-#include "Sample.h"
-#include "Matrix.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "Sample.h"
+#include "Matrix.h"
+#include "BLE.h"
 
 
 // Find a inverse matrix of a square and check it
-void Sample1()
+void InverseSample()
 {
     const int iSize = 3;
     double mTestInit[3][3] = { {1, 2, 0}, { -1, 1, 1}, { 1, 2, 3} };
@@ -58,7 +59,7 @@ void Sample1()
 
 
 // Find a transpose matrix of a none square matrix
-void Sample2()
+void TranseposeSample()
 {
     const int iSizeM = 2, iSizeN = 3;
     double mTestInit[2][3] = { {1, 2, 0}, { -1, 1, 1} };
@@ -100,4 +101,19 @@ void Sample2()
 
     free(mTest);
     free(mTranspose);
+}
+
+
+// Find BLE data
+void LNSSample()
+{
+    double dP0, dN, dRef;
+
+    dRef = 200.0;
+
+    SetBLEData();
+
+    GetLNSData(dRef, &dP0, &dN);
+
+    printf("P0 = %.3f  N = %.3f  dRef = %.3f \n", dP0, dN, dRef);
 }

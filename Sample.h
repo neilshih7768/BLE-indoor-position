@@ -3,10 +3,13 @@
 
 
 // Find a inverse matrix of a square and check it
-void Sample1();
+void InverseSample();
 
 // Find a transpose matrix of a none square matrix
-void Sample2();
+void TranseposeSample();
+
+// Find BLE data
+void LNSSample();
 
 
 
